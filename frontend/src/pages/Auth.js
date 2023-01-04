@@ -23,25 +23,39 @@ const initialFormValidity = false
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(false);
   
-  const [formState, inputHandler] = useForm(initialInputs, initialFormValidity)
+  const [formState, inputHandler, setFormSwitched] = useForm(initialInputs, initialFormValidity)
   
   const authSubmitHandler = (e) => {
     e.preventDefault();
     console.log(formState)
-    // const username = e.target.elements.username?.value
-    // const email = e.target.elements.email?.value
-    // const password = e.target.elements.password?.value
+    
     if(isLoginMode){
-      // console.log(email)
-      // console.log(password)
+      
     } else{
-      // console.log(username)
-      // console.log(email)
-      // console.log(password)
+    
     }
   };
 
   const onSwitchHandler = () => {
+    console.log("onSwitch: ",formState)
+    if(!isLoginMode){  //register mode
+      setFormSwitched(
+        {...formState.inputs, username:undefined},
+        formState.inputs.email.isValid && formState.inputs.password.isValid
+        )
+    }else{ // login mode
+      setFormSwitched(
+        {
+          ...formState.inputs,
+          username: {
+            value: "",
+            isValid: false,
+          },
+        },
+        false
+      );
+    }
+    // console.log(formState)
     setIsLoginMode((prevMode) => !prevMode);
   };
 

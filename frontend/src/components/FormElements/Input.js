@@ -25,7 +25,7 @@ function inputReducer (state, action){
 const Input = ({type, id, name, label, errorText, onInput}) => {
   const [inputState, dispatch] = useReducer(inputReducer,{
     value: "",
-    isValid: false,
+    isValid:  false,
     isBlur: false
   })
   const changeHandler = (e) =>{
@@ -36,11 +36,11 @@ const Input = ({type, id, name, label, errorText, onInput}) => {
     })
   }
 
-  const {value, isValid} = inputState
+  const {value, isValid, isBlur} = inputState
 
 useEffect(()=>{
   onInput(id, value, isValid)
-},[value, isValid])
+},[value, isValid, id , onInput])
 
   const blurHandler = () =>{
     dispatch({
@@ -56,12 +56,12 @@ useEffect(()=>{
         type={type}
         id={id}
         name={name}
-        // value={input}
+        // value={value}
         onChange={changeHandler}
         onBlur={blurHandler}
       />
       <br/>
-      {!inputState.isValid && inputState.isBlur && (
+      {!isValid && isBlur && (
         <>
         <div>{errorText}</div>
         </>
