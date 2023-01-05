@@ -6,9 +6,11 @@ function formReducer(state, action){
     case "INPUT_CHANGE":
       let formIsValid = true;
       for (const id in state.inputs){
-        // if (!state.inputs[id]){ 
-        //   continue;
-        // }
+        // this prevents from continuing reading undefined value of "username"
+        // after switching from register to login
+        if (!state.inputs[id]){ 
+          continue;
+        }
         if (id === action.id){ 
           //update the validity of changed input to form validity
           formIsValid = formIsValid && action.isValid

@@ -37,13 +37,13 @@ const Auth = () => {
   };
 
   const onSwitchHandler = () => {
-    console.log("onSwitch: ",formState)
-    if(!isLoginMode){  //register mode
+    
+    if(!isLoginMode){  // switching from register to login.
       setFormSwitched(
         {...formState.inputs, username:undefined},
         formState.inputs.email.isValid && formState.inputs.password.isValid
         )
-    }else{ // login mode
+    }else{ // switching from login to register
       setFormSwitched(
         {
           ...formState.inputs,
