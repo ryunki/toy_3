@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const { findOne } = require("../../models/User");
+const jwt = require("jsonwebtoken");
 
 const User = require('../../models/User')
 
@@ -25,26 +25,42 @@ const registerUser = async(req,res,next) => {
     return res.status(500).send("Could not register. Please try again")
   }
 
+  
+  const token = jwt.sign(
+      {userId: createdUser._id, email: createdUser.email},
+      process.env.JWT_KEY,
+      {expiresIn: "1h"}
+      )
+  
+
   res.status(201).json({
-    userCreated:{
       _id:createdUser._id,
       username,
-      email: email.toLowerCase(), 
-    }
+      email: email.toLowerCase(),
+      token
   })
 }
 
 const loginUser = async(req,res,next) => {
   try{
     const {email, password} = req.body
+    console.log(email, password)
     const existingUser = await User.findOne({email})
     if (!existingUser) {
       return res.status(403).send("Invalid credentials, could not log you in")
     } else if (bcrypt.compareSync(password, existingUser.password)){
+      
+      const token = jwt.sign(
+        {userId: existingUser._id, email: existingUser.email},
+        process.env.JWT_KEY,
+        {expiresIn: "1h"}
+        )
+
       return res.status(200).json({
         _id: existingUser._id,
         username: existingUser.username,
         email: existingUser.email,
+        token
       })
     }else{
       return res.status(401).send("Wrong credentials")
