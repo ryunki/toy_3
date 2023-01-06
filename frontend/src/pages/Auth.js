@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import Input from '../components/FormElements/Input';
+import { useNavigate } from "react-router-dom"
 import { useForm } from '../hooks/form-hook';
+
+import {login, register} from '../util/api'
+
+import Input from '../components/FormElements/Input';
 
 import './CSS/auth.css'
 
 const initialInputs = {
-  // username:{
-  //   value:"",
-  //   isValid:false,
-  // },
   email: {
     value: "",
     isValid: false,
@@ -21,23 +21,35 @@ const initialInputs = {
 const initialFormValidity = false
 
 const Auth = () => {
+  const navigate = useNavigate()
   const [isLoginMode, setIsLoginMode] = useState(false);
-  
   const [formState, inputHandler, setFormSwitched] = useForm(initialInputs, initialFormValidity)
   
-  const authSubmitHandler = (e) => {
+  const authSubmitHandler = async(e) => {
     e.preventDefault();
-    console.log(formState)
-    
     if(isLoginMode){
-      
+      const user = {
+        email : formState.inputs.email.value,
+        password : formState.inputs.password.value
+      }
+      const response = await login(user)
+      console.log(response)
+      localStorage.setItem('user',JSON.stringify(response))
+      navigate('/main')
     } else{
-    
+      const user = {
+        email : formState.inputs.email.value,
+        password : formState.inputs.password.value,
+        username : formState.inputs.username.value,
+      }
+      const response = await register(user)
+      console.log(response)
+      localStorage.setItem('user',JSON.stringify(response))
+      navigate('/main')
     }
   };
 
   const onSwitchHandler = () => {
-    
     if(!isLoginMode){  // switching from register to login.
       setFormSwitched(
         {...formState.inputs, username:undefined},
