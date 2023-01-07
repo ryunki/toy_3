@@ -35,7 +35,7 @@ const Auth = () => {
       const response = await login(user)
       console.log(response)
       localStorage.setItem('user',JSON.stringify(response))
-      navigate('/main')
+      navigate('/mainboard')
     } else{
       const user = {
         email : formState.inputs.email.value,
@@ -45,7 +45,7 @@ const Auth = () => {
       const response = await register(user)
       console.log(response)
       localStorage.setItem('user',JSON.stringify(response))
-      navigate('/main')
+      navigate('/mainboard')
     }
   };
 

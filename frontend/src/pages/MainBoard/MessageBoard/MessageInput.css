@@ -1,0 +1,9 @@
+.input-wrapper{
+  margin:0px;
+  text-align: center;
+}
+.input{
+  margin: 3px auto;
+  width: 98%;
+  height: 95px;
+}

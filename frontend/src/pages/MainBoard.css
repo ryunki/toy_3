@@ -1,0 +1,7 @@
+.mainboard-container{
+  display:flex;
+  height:100vh;
+}
+.header-chat-container{
+  width:100%;
+}
