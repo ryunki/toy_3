@@ -1,6 +1,20 @@
 .sidebar-container{
   background-color: green;
-  display:flex;
+  display:block;
   width:20%;
   height:100%;
+}
+
+.socket-wrapper{
+  overflow-wrap: anywhere;
+  display:flex;
+}
+
+.username-container{
+  display:flex;
+  justify-content:space-between;
+  margin-inline: 5px;
+}
+.pointer{
+  cursor:pointer;
 }
