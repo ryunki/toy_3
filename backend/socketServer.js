@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+// const authSocket = require('./middleware/authSocket');
 
 const socketServer = (server) => {
   const io = require('socket.io')(server,{
@@ -7,22 +8,26 @@ const socketServer = (server) => {
     }
   });
 
-  io.use((socket,next) => {
-    const token = socket.handshake.auth?.token 
-    try{
-      const decoded = jwt.verify(token, process.env.JWT_KEY)
-      socket.user = decoded
-    }catch(err){
-      return console.log(err)
-    }
-    next()
-  })
+  // io.use((socket,next)=>{
+  //   authSocket(socket,next)
+  // })
 
-  const onlineUsers = []
+  const onlineUsers = new Map()
   io.on('connection', (socket) =>{
     console.log('user connected')
-    console.log(socket.id)
-    console.log(socket.user)
+    const token = socket.handshake.auth?.token 
+    const decoded = jwt.verify(token, process.env.JWT_KEY)
+    socket.user = decoded
+// saving online user's data to their socket id
+    onlineUsers.set(socket.id, socket.user)
+    
+// delete previous socket.id on refresh. this prevents from stacking socket.id on every refresh
+    socket.on('disconnect', ()=>{
+      if(onlineUsers.has(socket.id)){
+        onlineUsers.delete(socket.id)
+      }
+    })
+    console.log(onlineUsers)
   })
 }
 
