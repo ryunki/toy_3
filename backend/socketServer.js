@@ -12,23 +12,40 @@ const socketServer = (server) => {
   //   authSocket(socket,next)
   // })
 
-  const onlineUsers = new Map()
+  const emitOnlineUsers = ({onlineUsers}) =>{
+    // const onlineUsers = serverStore.getOnlineUsers()
+    io.emit(
+      'online-users', {onlineUsers}
+    )
+  }
+
+  const connectedUsers = new Map()
   io.on('connection', (socket) =>{
     console.log('user connected')
     const token = socket.handshake.auth?.token 
     const decoded = jwt.verify(token, process.env.JWT_KEY)
     socket.user = decoded
 // saving online user's data to their socket id
-    onlineUsers.set(socket.id, socket.user)
+    connectedUsers.set(socket.id, socket.user)
+    const onlineUsers = []
+    connectedUsers.forEach((value, key)=>{
+      onlineUsers.push({
+        socket: key,
+        userData: value
+      })
+    })
     
+// send list of online users to frontend
+    emitOnlineUsers({onlineUsers})
+
 // delete previous socket.id on refresh. this prevents from stacking socket.id on every refresh
     socket.on('disconnect', ()=>{
-      if(onlineUsers.has(socket.id)){
-        onlineUsers.delete(socket.id)
+      if(connectedUsers.has(socket.id)){
+        connectedUsers.delete(socket.id)
       }
     })
-    console.log(onlineUsers)
-  })
+    
+  }) 
 }
 
 module.exports = {
