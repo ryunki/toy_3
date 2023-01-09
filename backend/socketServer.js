@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
-// const authSocket = require('./middleware/authSocket');
+
+const authSocket = require('./middleware/authSocket');
 const socketServerStore = require('./socketServerStore')
 
 const socketServer = (server) => {
@@ -9,28 +9,15 @@ const socketServer = (server) => {
     }
   });
 
-  // io.use((socket,next)=>{
-  //   authSocket(socket,next)
-  // })
-
-  const emitOnlineUsers = (socket) =>{
-    const onlineUsers = socketServerStore.getOnlineUsers(socket)
-    io.emit(
-      'online-users', {onlineUsers}
-    )
-  }
+  //check token validity and decode token
+  io.use((socket,next)=>{
+    authSocket(socket,next)
+  })
 
   socketServerStore.setSocketIo(io)
   
   io.on('connection', (socket) =>{
     console.log('user connected')
-    const token = socket.handshake.auth?.token 
-    try{
-      const decoded = jwt.verify(token, process.env.JWT_KEY)
-      socket.user = decoded
-    }catch(err){
-      console.log(err)
-    }
     
 // send list of online users to frontend
     socketServerStore.getOnlineUsers(socket)
