@@ -19,6 +19,7 @@ export const socketConnection = (userData, setOnlineUsers) => {
   })
 }
 
-export const sendDirectMessage = (data) => {
-  socket.emit('direct-message', data)
+export const sendDirectMessage = ({message, receiverInfo}) => {
+  socket.emit('direct-message', message, receiverInfo)
 }
+

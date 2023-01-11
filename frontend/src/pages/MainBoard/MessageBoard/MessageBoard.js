@@ -5,20 +5,21 @@ import MessageInput from './MessageInput'
 
 import './MessageBoard.css'
 
-const Chat = () => {
-  const [message, setMessage] = useState("")
+const MessageBoard = (props) => {
 
   return (
     <div className="messageboard-container">
       <MessageContents
         
-      />
+        />
       <MessageInput
-        message={message}
-        setMessage={setMessage}
+        message={props.message}
+        setMessage={props.setMessage}
+        inputHandler={props.inputHandler}
+        enterHandler={props.enterHandler}
       />
     </div>
   )
 }
 
-export default Chat
+export default MessageBoard
