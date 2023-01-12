@@ -1,13 +1,12 @@
 import {useState} from 'react'
+import { useSelector } from 'react-redux'
 
 import './SideBar.css'
 
-const SideBar = ({onlineUsers, userData, beginChatHandler}) => {
+const SideBar = ({ userData, beginChatHandler}) => {
 
-  const [first, setfirst] = useState()
-
-
-
+  const onlineUsers = useSelector((state)=> state.online.users)
+  console.log(onlineUsers)
   return (
     <>
       <div className="sidebar-container">

@@ -6,10 +6,15 @@ import SideBar from "./MainBoard/SideBar/SideBar"
 import { sendDirectMessage, socketConnection } from "../realtimeCommunication/socketConnection"
 import { logout } from "../util/auth"
 
+import { setUserData } from "../store/slices/userSlice"
+import { useSelector, useDispatch } from 'react-redux'
+
 import './MainBoard.css'
 
 
 const MainBoard = () => {
+  const dispatch = useDispatch()
+
   const [onlineUsers, setOnlineUsers] = useState([])
   const [message, setMessage] = useState("")
   const [beginChat, setBeginChat] = useState({})
@@ -20,7 +25,10 @@ const MainBoard = () => {
     if(!userData){
       logout()
     } else {
-      socketConnection(userData, setOnlineUsers)
+      console.log(userData)
+      dispatch(setUserData(userData))
+      // setUserData(userData)
+      socketConnection(userData, dispatch)
     }
   },[])
   
