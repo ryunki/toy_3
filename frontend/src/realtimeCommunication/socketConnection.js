@@ -1,8 +1,9 @@
 
 import io from "socket.io-client"
-import MessageContents from "../pages/MainBoard/MessageBoard/Message/MessageContents";
+
 import {setOnlineUsers} from "../store/slices/onlineSlice";
-import { chatUpdate } from "../util/chatUpdate";
+import {setChat} from "../store/slices/chatSlice";
+
 
 let socket = null
 
@@ -25,7 +26,9 @@ export const socketConnection = (userData, dispatch) => {
   })
 
   socket.on('direct-chat-history', (data) => {
-    chatUpdate(data)
+    // chatUpdate(data)
+    console.log("chat-history: ", data)
+    dispatch(setChat(data))
   })
 }
 
