@@ -1,15 +1,16 @@
 
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { getDirectChatHistory } from '../../../../realtimeCommunication/socketConnection'
 import { setChat } from '../../../../store/slices/chatSlice'
 
 import './MessageContents.css'
 
-const MessageContents = () => {
+const MessageContents = (beginChat) => {
   const dispatch = useDispatch()
   // const [messages, setMessages] = useState()
   const chat = useSelector(state => state.chat)
-  
+
   useEffect(()=>{
     if(chat){
       //save chat to redux
@@ -19,6 +20,10 @@ const MessageContents = () => {
     }
   },[chat])
   
+  useEffect(()=>{
+    console.log("beginChat!!!!!")
+    getDirectChatHistory(beginChat)
+  },[beginChat])
   return (
 
     <div className="message-contents-container">

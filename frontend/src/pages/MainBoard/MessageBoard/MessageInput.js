@@ -1,9 +1,7 @@
 
-import { sendDirectMessage } from '../../../realtimeCommunication/socketConnection'
-
 import './MessageInput.css'
 
-const MessageInput = ({message, setMessage, inputHandler, enterHandler}) => {
+const MessageInput = ({message, inputHandler, enterHandler, disableInput}) => {
 
   
   return (
@@ -12,6 +10,7 @@ const MessageInput = ({message, setMessage, inputHandler, enterHandler}) => {
         value={message}
         onChange={inputHandler} 
         onKeyDown={enterHandler}
+        disabled={disableInput}
       />
     </div>
   )
