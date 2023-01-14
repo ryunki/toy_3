@@ -25,16 +25,20 @@ export const socketConnection = (userData, dispatch) => {
     dispatch(setOnlineUsers(onlineUsers))
   })
 
+  // the targeted user receives message from this
   socket.on('direct-chat-history', (data) => {
-    // chatUpdate(data)
-    console.log("chat-history: ", data)
     dispatch(setChat(data))
   })
 }
 
+// send message from sender to targeted user
 export const sendDirectMessage = ({message, receiverInfo}) => {
   socket.emit('direct-message', message, receiverInfo)
 }
 
+export const getDirectChatHistory = (receiverId) =>{
+  // send target user ID to server
+  socket.emit('direct-chat-history', receiverId)
+}
 
 

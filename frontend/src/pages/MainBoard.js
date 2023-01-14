@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import MessageBoard from "./MainBoard/MessageBoard/MessageBoard"
 import Header from "./MainBoard/Header"
 import SideBar from "./MainBoard/SideBar/SideBar"
-import { sendDirectMessage, socketConnection } from "../realtimeCommunication/socketConnection"
+import { sendDirectMessage, socketConnection, getDirectChatHistory } from "../realtimeCommunication/socketConnection"
 import { logout } from "../util/auth"
 
 import { setUserData } from "../store/slices/userSlice"
@@ -14,8 +14,6 @@ import './MainBoard.css'
 
 const MainBoard = () => {
   const dispatch = useDispatch()
-
-  const [onlineUsers, setOnlineUsers] = useState([])
   const [message, setMessage] = useState("")
   const [beginChat, setBeginChat] = useState({})
 
@@ -26,14 +24,18 @@ const MainBoard = () => {
       logout()
     } else {
       console.log(userData)
+      //saving user data in redux
       dispatch(setUserData(userData))
-      // setUserData(userData)
+      
+      // update online users 
       socketConnection(userData, dispatch)
     }
   },[])
   
   const beginChatHandler = (socketId, receiverId, username) => {
     setBeginChat({username, socketId, receiverId})
+    //get chat history when a target user is clicked
+    getDirectChatHistory(receiverId)
   }
 
   const inputHandler = (e) => {
@@ -51,7 +53,6 @@ const MainBoard = () => {
   return (
     <div className="mainboard-container">
       <SideBar 
-        onlineUsers = {onlineUsers}
         userData = {userData}
         beginChatHandler = {beginChatHandler}
       />
@@ -64,6 +65,7 @@ const MainBoard = () => {
           setMessage={setMessage}
           inputHandler={inputHandler}
           enterHandler={enterHandler}
+          beginChat={beginChat}
         />
       </div>
     </div>
