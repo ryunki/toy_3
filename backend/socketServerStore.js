@@ -18,9 +18,17 @@ const getOnlineUsers = (socket) => {
       userData: value
     })
   })
-  // return onlineUsers
-  console.log(onlineUsers)
-  io.emit('online-users', {onlineUsers})
+  return onlineUsers
+}
+
+const getActiveConnections = (userId) => {
+  const activeConnections = []
+// key is a socketID, value is a userData
+  connectedUsers.forEach((value, key) => {
+    if(userId === value._id)
+      activeConnections.push(key)
+  })
+  return activeConnections
 }
 
 const removeConnectedUser = (socket) => {
@@ -35,4 +43,5 @@ module.exports = {
   getSocketIo,
   getOnlineUsers,
   removeConnectedUser,
+  getActiveConnections,
 }
