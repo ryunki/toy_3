@@ -8,9 +8,14 @@ const getSocketIo = () => {
   return io
 }
 
-const getOnlineUsers = (socket) => {
-  // saving online user's data to their socket id
+// adding new user to the list
+const addNewConnectedUser = (socket) => {
   connectedUsers.set(socket.id, socket.user)
+  console.log("new connected users:: ", connectedUsers)
+}
+
+// used for displaying online/offline users
+const getOnlineUsers = () => {
   const onlineUsers = []
   connectedUsers.forEach((value, key)=>{
     onlineUsers.push({
@@ -18,6 +23,7 @@ const getOnlineUsers = (socket) => {
       userData: value
     })
   })
+  console.log("ONLINE users ::: ", onlineUsers)
   return onlineUsers
 }
 
@@ -41,7 +47,8 @@ const removeConnectedUser = (socket) => {
 module.exports = {
   setSocketIo,
   getSocketIo,
+  addNewConnectedUser,
   getOnlineUsers,
-  removeConnectedUser,
   getActiveConnections,
+  removeConnectedUser,
 }
