@@ -6,7 +6,7 @@ const userSchema = new Schema({
   email:{ type:String, unique:true, required:true}, //"unique:true" create index for email. simply speeds up for query process
   password:{ type:String, required:true},
   friends:[{
-    type: Schema.Types.Object,
+    type: Schema.Types.ObjectId,
     ref: "User"
   }],
   createdAt:{type:Date, default:Date.now},

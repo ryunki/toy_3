@@ -27,7 +27,7 @@ const registerUser = async(req,res,next) => {
 
   
   const token = jwt.sign(
-      {userId: createdUser._id, email: createdUser.email},
+      {_id: createdUser._id, email: createdUser.email, username:createdUser.username},
       process.env.JWT_KEY,
       {expiresIn: "1h"}
       )
@@ -44,14 +44,13 @@ const registerUser = async(req,res,next) => {
 const loginUser = async(req,res,next) => {
   try{
     const {email, password} = req.body
-    console.log(email, password)
     const existingUser = await User.findOne({email})
     if (!existingUser) {
       return res.status(403).send("Invalid credentials, could not log you in")
     } else if (bcrypt.compareSync(password, existingUser.password)){
       
       const token = jwt.sign(
-        {userId: existingUser._id, email: existingUser.email},
+        {_id: existingUser._id, email: existingUser.email, username:existingUser.username},
         process.env.JWT_KEY,
         {expiresIn: "1h"}
         )

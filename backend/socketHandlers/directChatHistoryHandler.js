@@ -28,7 +28,6 @@ const directChatHistoryHandler = async(socket, receiverId) =>{
   }catch(err){
     console.log(err)
   }
-
 }
 
 module.exports = directChatHistoryHandler

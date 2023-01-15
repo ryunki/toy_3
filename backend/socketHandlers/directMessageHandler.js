@@ -7,7 +7,8 @@ const directMessageHandler = async (socket, message, receiverInfo) => {
   try{
     const senderId = socket.user._id
     const receiverId = receiverInfo.receiverId
-    const receiverSocketId = receiverInfo.socketId
+    // const receiverSocketId = receiverInfo.socketId
+    
     //create new message
     const sentMessage = await Message.create({
       author: senderId,
@@ -23,7 +24,7 @@ const directMessageHandler = async (socket, message, receiverInfo) => {
       await existingConvo.save()
 
       //update chat to client
-      updateChat(existingConvo._id, receiverSocketId)
+      updateChat(existingConvo._id)
     }else{
       const newConversation = await Conversation.create({
         participants:[senderId, receiverId],
@@ -31,7 +32,7 @@ const directMessageHandler = async (socket, message, receiverInfo) => {
       })
       
       //update chat to client
-      updateChat(newConversation._id, receiverSocketId)
+      updateChat(newConversation._id)
     }
   
 
