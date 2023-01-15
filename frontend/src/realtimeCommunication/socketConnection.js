@@ -20,7 +20,7 @@ export const socketConnection = (userData, dispatch) => {
   })
 
   socket.on('online-users', ({onlineUsers}) => {
-    console.log(onlineUsers)
+    console.log('listening to online-users event...: ',onlineUsers)
     // setOnlineUsers(onlineUsers)
     dispatch(setOnlineUsers(onlineUsers))
   })

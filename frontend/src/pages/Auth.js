@@ -32,8 +32,7 @@ const Auth = () => {
         email : formState.inputs.email.value,
         password : formState.inputs.password.value
       }
-      const response = await login(user)
-      console.log(response)
+      const response = await login(user, navigate)
       localStorage.setItem('user',JSON.stringify(response))
       navigate('/mainboard')
     } else{
@@ -43,7 +42,6 @@ const Auth = () => {
         username : formState.inputs.username.value,
       }
       const response = await register(user)
-      console.log(response)
       localStorage.setItem('user',JSON.stringify(response))
       navigate('/mainboard')
     }
@@ -70,6 +68,14 @@ const Auth = () => {
     // console.log(formState)
     setIsLoginMode((prevMode) => !prevMode);
   };
+
+  // if user hasn't logged out. let user continue from mainboard
+  // useEffect(()=>{
+  //   const loggedInUser = localStorage.getItem('user')
+  //   if(loggedInUser){
+  //     navigate('/mainboard')
+  //   }
+  // },[])
 
   return (
     <div className="auth-container">

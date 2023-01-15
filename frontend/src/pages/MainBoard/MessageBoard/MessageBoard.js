@@ -7,10 +7,9 @@ import WelcomeMessage from './WelcomeMessage'
 import './MessageBoard.css'
 
 const MessageBoard = (props) => {
-  const [disableInput, setDisableInput] = useState()
+  const [disableInput, setDisableInput] = useState(false)
 
   useEffect(()=>{
-    console.log(props.beginChat.username)
     if(props.beginChat.username){
       setDisableInput(false)
     }else{

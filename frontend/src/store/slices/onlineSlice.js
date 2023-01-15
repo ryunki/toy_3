@@ -9,7 +9,6 @@ export const onlineSlice = createSlice({
   initialState,
   reducers: {
     setOnlineUsers: (state, action)=>{
-
       state.users = action.payload
     }
   }

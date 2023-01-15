@@ -1,29 +1,20 @@
 
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDirectChatHistory } from '../../../../realtimeCommunication/socketConnection'
 import { setChat } from '../../../../store/slices/chatSlice'
 
 import './MessageContents.css'
 
-const MessageContents = (beginChat) => {
+const MessageContents = () => {
   const dispatch = useDispatch()
   // const [messages, setMessages] = useState()
   const chat = useSelector(state => state.chat)
 
   useEffect(()=>{
-    if(chat){
       //save chat to redux
       dispatch(setChat(chat))
-    }else{
-      console.log("no chat in local")
-    }
   },[chat])
   
-  useEffect(()=>{
-    console.log("beginChat!!!!!")
-    getDirectChatHistory(beginChat)
-  },[beginChat])
   return (
 
     <div className="message-contents-container">

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { logout } from './auth'
+
 const apiClient = axios.create({
   baseURL: '/api',
   timeout:1000, //how long to wait for response
@@ -21,11 +22,13 @@ const apiClient = axios.create({
 //   }
 // )
 
-export const login = async(user) => {
+export const login = async(user, navigate) => {
   try{
     const {data} = await apiClient.post('/login', user)
     return data
   }catch(err){
+    console.log("hey")
+    navigate('/')
     return err
   }
 }

@@ -23,7 +23,6 @@ const MainBoard = () => {
     if(!userData){
       logout()
     } else {
-      console.log(userData)
       //saving user data in redux
       dispatch(setUserData(userData))
       
@@ -32,6 +31,7 @@ const MainBoard = () => {
     }
   },[])
   
+  //when click on another user name
   const beginChatHandler = (socketId, receiverId, username) => {
     setBeginChat({username, socketId, receiverId})
     //get chat history when a target user is clicked

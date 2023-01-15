@@ -6,7 +6,6 @@ import './SideBar.css'
 const SideBar = ({ userData, beginChatHandler}) => {
 
   const onlineUsers = useSelector((state)=> state.online.users)
-  console.log(onlineUsers)
   return (
     <>
       <div className="sidebar-container">
