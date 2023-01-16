@@ -22,9 +22,8 @@ const socketServer = (server) => {
     console.log('user connected')
     
     socketServerStore.addNewConnectedUser(socket)
-
 // send list of online users to frontend
-    emitOnlineUsers()
+    emitOnlineUsers(socket)
 
 // receive message from client
     socket.on('direct-message',(message, receiverInfo)=>{
@@ -46,12 +45,17 @@ const socketServer = (server) => {
 
   //outside of io connection event
   //emit online users for every 8 seconds
+
   setInterval(()=>{
     emitOnlineUsers()
-  },[8000])
+  },[10000])
 
   // emit current online users list to client
-  function emitOnlineUsers() {
+  function emitOnlineUsers(socket) {
+    if(socket){
+      socketServerStore.removeDuplicateUser(socket)
+    }
+    console.log("------------updated online users------------")
     const onlineUsers = socketServerStore.getOnlineUsers()
     io.emit('online-users', {onlineUsers})
   }

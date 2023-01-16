@@ -1,4 +1,6 @@
 const connectedUsers = new Map()
+const connectedUsersCopy = new Map()
+
 let io = null
 
 const setSocketIo = (ioInstance) => {
@@ -11,26 +13,43 @@ const getSocketIo = () => {
 // adding new user to the list
 const addNewConnectedUser = (socket) => {
   connectedUsers.set(socket.id, socket.user)
-  console.log("new connected users:: ", connectedUsers)
+  connectedUsersCopy.set(socket.id, socket.user)
+
 }
 
 // used for displaying online/offline users
 const getOnlineUsers = () => {
   const onlineUsers = []
   connectedUsers.forEach((value, key)=>{
-    onlineUsers.push({
-      socket: key,
-      userData: value
+      onlineUsers.push({
+        socket: key,
+        userData: value
+      })
     })
-  })
+  
   console.log("ONLINE users ::: ", onlineUsers)
   return onlineUsers
+}
+
+// replace an existing user's socket to a current one 
+const removeDuplicateUser = (socket) => {
+  const newConnectedUsers = new Map(connectedUsers)
+  newConnectedUsers.forEach((user, socketId) => {
+    //check if a new logged in user already exists in the online list
+    if(user._id === socket.user._id){
+      console.log("duplicate user exists")
+      //replace with a new socket
+      connectedUsers.delete(socketId)
+      connectedUsers.set(socket.id, socket.user)
+    }
+  })
+  console.log(connectedUsersCopy)
 }
 
 const getActiveConnections = (userId) => {
   const activeConnections = []
 // key is a socketID, value is a userData
-  connectedUsers.forEach((value, key) => {
+connectedUsersCopy.forEach((value, key) => {
     if(userId === value._id)
       activeConnections.push(key)
   })
@@ -49,6 +68,7 @@ module.exports = {
   getSocketIo,
   addNewConnectedUser,
   getOnlineUsers,
+  removeDuplicateUser,
   getActiveConnections,
   removeConnectedUser,
 }

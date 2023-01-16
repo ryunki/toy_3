@@ -25,9 +25,9 @@ const updateChat = async(conversationId, receiverSocketId = null) => {
         })
       }
     
-    
+// this emits typed message to both sender and receiver on client-side
     conversation.participants.forEach(userId => {
-      //search and retrieve for online user's socket ID in a conversation
+      //search for participants ID in online users' list
       const activeConnections = getActiveConnections(userId.toString())
       // send the whole conversation to each participants
       activeConnections.forEach(socketId => {
