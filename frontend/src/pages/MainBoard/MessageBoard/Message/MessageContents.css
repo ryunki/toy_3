@@ -1,4 +1,5 @@
 .message-contents-container{
   background-color: bisque;
-  height:85%;
+  height:80vh;
+  overflow: auto;
 }
