@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom"
 import { useForm } from '../hooks/form-hook';
+import {userLogin} from '../util/auth';
 
 import {login, register} from '../util/api'
 
@@ -33,7 +34,7 @@ const Auth = () => {
         password : formState.inputs.password.value
       }
       const response = await login(user, navigate)
-      localStorage.setItem('user',JSON.stringify(response))
+      userLogin(response)
       navigate('/mainboard')
     } else{
       const user = {
@@ -42,7 +43,7 @@ const Auth = () => {
         username : formState.inputs.username.value,
       }
       const response = await register(user)
-      localStorage.setItem('user',JSON.stringify(response))
+      userLogin(response)
       navigate('/mainboard')
     }
   };
@@ -70,12 +71,12 @@ const Auth = () => {
   };
 
   // if user hasn't logged out. let user continue from mainboard
-  // useEffect(()=>{
-  //   const loggedInUser = localStorage.getItem('user')
-  //   if(loggedInUser){
-  //     navigate('/mainboard')
-  //   }
-  // },[])
+  useEffect(()=>{
+    const loggedInUser = localStorage.getItem('user')
+    if(loggedInUser){
+      navigate('/mainboard')
+    }
+  },[])
 
   return (
     <div className="auth-container">
