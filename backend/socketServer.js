@@ -4,10 +4,11 @@ const socketServerStore = require('./socketServerStore')
 const directMessageHandler = require('./socketHandlers/directMessageHandler');
 const getDirectChatHistoryHandler = require('./socketHandlers/directChatHistoryHandler');
 
-const socketServer = (server) => {
+const socketServer = async(server) => {
   const io = require('socket.io')(server,{
     cors: {
-      origin: 'http://localhost:3000'
+      // origin: 'http://localhost:3000'
+      origin: '*'
     }
   });
 
@@ -52,7 +53,9 @@ const socketServer = (server) => {
 
   // emit current online users list to client
   function emitOnlineUsers(socket) {
+    //whenever a new socket is connected (a user logged in)
     if(socket){
+      // remove duplicate user in the online user list for frontend
       socketServerStore.removeDuplicateUser(socket)
     }
     console.log("------------updated online users------------")

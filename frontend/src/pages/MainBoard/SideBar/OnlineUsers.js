@@ -9,7 +9,6 @@ const OnlineUsers = ({ userData, beginChatHandler,onlineUsers}) => {
         <h3>Online Users</h3>
         {onlineUsers && onlineUsers.map((item,idx)=>(
           <div className="userlist-container" key={idx}>
-            {/* <div className="socket-wrapper">{item.socket}</div> */}
             <div className="username-container">
               {/* make them clickable except yourself */}
               {userData.username !== item.userData.username ?

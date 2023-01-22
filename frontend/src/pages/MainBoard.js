@@ -7,7 +7,7 @@ import { sendDirectMessage, socketConnection, getDirectChatHistory } from "../re
 import { logout } from "../util/auth"
 
 import { setUserData } from "../store/slices/userSlice"
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import './MainBoard.css'
 

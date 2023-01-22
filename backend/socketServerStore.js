@@ -1,4 +1,9 @@
+//online user list for frontend. no duplicate users are stored here
 const connectedUsers = new Map()
+
+//online user list for backend. store duplicate users (users logged in from different browser)
+//this is for emitting sent messages to the same user in another browser.
+//without this, message will show only for the one who typed.
 const connectedUsersCopy = new Map()
 
 let io = null
@@ -14,7 +19,6 @@ const getSocketIo = () => {
 const addNewConnectedUser = (socket) => {
   connectedUsers.set(socket.id, socket.user)
   connectedUsersCopy.set(socket.id, socket.user)
-
 }
 
 // used for displaying online/offline users
@@ -26,8 +30,6 @@ const getOnlineUsers = () => {
         userData: value
       })
     })
-  
-  console.log("ONLINE users ::: ", onlineUsers)
   return onlineUsers
 }
 
@@ -43,7 +45,6 @@ const removeDuplicateUser = (socket) => {
       connectedUsers.set(socket.id, socket.user)
     }
   })
-  console.log(connectedUsersCopy)
 }
 
 const getActiveConnections = (userId) => {
@@ -56,10 +57,15 @@ connectedUsersCopy.forEach((value, key) => {
   return activeConnections
 }
 
+
 const removeConnectedUser = (socket) => {
-  if(connectedUsers.has(socket.id)){
-    connectedUsers.delete(socket.id)
+  if(connectedUsersCopy.has(socket.id)){
+    connectedUsersCopy.delete(socket.id)
+    if(connectedUsers.has(socket.id)){
+      connectedUsers.delete(socket.id)
+    }
   }
+
 }
 
 

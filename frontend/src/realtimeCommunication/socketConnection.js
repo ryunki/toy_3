@@ -4,18 +4,20 @@ import io from "socket.io-client"
 import {setOnlineUsers} from "../store/slices/onlineSlice";
 import {setChat} from "../store/slices/chatSlice";
 
-
 let socket = null
 
 export const socketConnection = (userData, dispatch) => {
   
   const token = userData.token
+  // this is for browser
   socket = io("http://localhost:5000",{
+  //this works for mobile phone and brower
+  // socket = io("http://192.168.0.5:5000",{
     auth:{
       token
     }
   });
-  socket.on('connect', ()=>{
+  socket.on('connection', ()=>{
     console.log('successfully connected with socket.io server')
   })
 
