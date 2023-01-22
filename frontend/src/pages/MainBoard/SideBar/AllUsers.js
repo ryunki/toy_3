@@ -1,23 +1,15 @@
 import axios from 'axios'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getAllUsers } from '../../../util/api'
 
-const fetchUsers = async() => {
-  const {data} = await axios.get('/api/users')
-  console.log("DATA:",data)
-  return data
-}
 
 const AllUsers = () => {
   const [allUsers, setAllUsers] = useState([])
 
   useEffect(()=>{
-    console.log("userEFFECT")
-    fetchUsers()
+    getAllUsers()
       .then(res=>{
         setAllUsers(res)
-      })
-      .catch(err=>{
-        console.log(err)
       })
   },[])
 
