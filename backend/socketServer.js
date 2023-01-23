@@ -1,5 +1,5 @@
-const authSocket = require('./middleware/authSocket');
 const socketServerStore = require('./socketServerStore')
+const authSocket = require('./middleware/authSocket');
 
 const directMessageHandler = require('./socketHandlers/directMessageHandler');
 const getDirectChatHistoryHandler = require('./socketHandlers/directChatHistoryHandler');

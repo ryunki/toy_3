@@ -50,19 +50,19 @@ export const getAllUsers = async()=>{
   }
 }
 
-export const getToken = async()=>{
-  try{
-    const {data} = await apiClient.get('/get-token')
-    return data
-  }catch(err){
-    // checkResponseCode(err)
-    return err
-  }
-}
+// export const getToken = async()=>{
+//   try{
+//     const {data} = await apiClient.get('/get-token')
+//     return data
+//   }catch(err){
+//     // checkResponseCode(err)
+//     return err
+//   }
+// }
 
-const checkResponseCode = (exception) => {
-  const responseCode = exception?.response?.status;
-  if(responseCode){
-    (responseCode === 401 || responseCode === 403) && logout()
-  }
-}
+// const checkResponseCode = (exception) => {
+//   const responseCode = exception?.response?.status;
+//   if(responseCode){
+//     (responseCode === 401 || responseCode === 403) && logout()
+//   }
+// }
