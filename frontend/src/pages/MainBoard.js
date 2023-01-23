@@ -20,14 +20,15 @@ const MainBoard = () => {
   const userData = JSON.parse(localStorage.getItem("user"))
 
   useEffect(()=>{
-    if(!userData){
-      logout()
-    } else {
+    if(userData){
+      console.log("userData exists in MainBoard.js", userData)
       //saving user data in redux
       dispatch(setUserData(userData))
       
       // update online users 
       socketConnection(userData, dispatch)
+    } else {
+      logout()
     }
   },[])
   

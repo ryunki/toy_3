@@ -34,8 +34,8 @@ const Auth = () => {
         password : formState.inputs.password.value
       }
       const response = await login(user, navigate)
-      userLogin(response)
-      navigate('/mainboard')
+      userLogin(response, navigate)
+
     } else{
       const user = {
         email : formState.inputs.email.value,
@@ -43,8 +43,7 @@ const Auth = () => {
         username : formState.inputs.username.value,
       }
       const response = await register(user)
-      userLogin(response)
-      navigate('/mainboard')
+      userLogin(response, navigate)
     }
   };
 

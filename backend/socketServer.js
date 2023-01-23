@@ -49,7 +49,7 @@ const socketServer = async(server) => {
 
   setInterval(()=>{
     emitOnlineUsers()
-  },[10000])
+  },[7000])
 
   // emit current online users list to client
   function emitOnlineUsers(socket) {
@@ -60,6 +60,7 @@ const socketServer = async(server) => {
     }
     console.log("------------updated online users------------")
     const onlineUsers = socketServerStore.getOnlineUsers()
+    console.log(onlineUsers)
     io.emit('online-users', {onlineUsers})
   }
 }

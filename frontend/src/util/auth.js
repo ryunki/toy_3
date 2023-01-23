@@ -5,15 +5,8 @@ export const logout = () => {
   window.location.pathname = "/";
 };
 
-export const userLogin = async (response) =>{
 
-  function parseJwt(token){
-    try{
-      return JSON.parse(window.atob(token.split('.')[1]))
-    }catch(err){
-      return null
-    }
-  }
+export const userLogin = async (response, navigate) =>{
 
   const {_id, username, email, token} = response
   const decoded = await parseJwt(token)
@@ -42,9 +35,18 @@ export const userLogin = async (response) =>{
       tokenExpiration: expWithISO
     })
   )
+  navigate('/mainboard')
 
   // setExpireDate(new Date(expInMil))
   const remainingTime = expInMil - Date.now()
   setTimeout(logout, remainingTime)
   
+}
+
+function parseJwt(token){
+  try{
+    return JSON.parse(window.atob(token.split('.')[1]))
+  }catch(err){
+    return null
+  }
 }

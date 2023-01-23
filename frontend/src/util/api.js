@@ -46,6 +46,8 @@ export const getAllUsers = async()=>{
     const {data} = await apiClient.get('/users')
     return data
   }catch(err){
+    // when the token expires -> status 401
+    checkResponseCode(err)
     return err
   }
 }
@@ -60,9 +62,9 @@ export const getAllUsers = async()=>{
 //   }
 // }
 
-// const checkResponseCode = (exception) => {
-//   const responseCode = exception?.response?.status;
-//   if(responseCode){
-//     (responseCode === 401 || responseCode === 403) && logout()
-//   }
-// }
+const checkResponseCode = (exception) => {
+  const responseCode = exception?.response?.status;
+  if(responseCode){
+    (responseCode === 401 || responseCode === 403) && logout()
+  }
+}
