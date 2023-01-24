@@ -37,10 +37,9 @@ const Auth = () => {
         email : formState.inputs.email.value,
         password : formState.inputs.password.value
       }
-      console.log("1. before await login")
+
       const response = await login(user, navigate)
-      console.log("2. after await login")
-      userLogin(response, navigate, dispatch)
+      userLogin(response, navigate)
       //saving user data in redux
       dispatch(setUserData(response))
     } else{
@@ -50,7 +49,7 @@ const Auth = () => {
         username : formState.inputs.username.value,
       }
       const response = await register(user)
-      userLogin(response, navigate, dispatch)
+      userLogin(response, navigate)
       //saving user data in redux
       dispatch(setUserData(response))
     }

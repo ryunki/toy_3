@@ -4,7 +4,7 @@ const config = process.env
 
 const verifyToken = async(req,res,next)=>{
   let token = req.body.token || req.query.token || req.headers['authorization']
-  console.log("VERIFY TOKEN authorization: ",token)
+ 
   if (!token){
     return res.status(403).send('A token is required for authentication') // status 403 is forbidden
   }

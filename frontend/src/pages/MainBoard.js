@@ -9,6 +9,7 @@ import { logout } from "../util/auth"
 import { useDispatch } from 'react-redux'
 
 import './MainBoard.css'
+import { setUserData } from "../store/slices/userSlice"
 
 
 const MainBoard = () => {
@@ -20,6 +21,9 @@ const MainBoard = () => {
   useEffect(()=>{
     const userData = JSON.parse(localStorage.getItem("user"))
     if(userData){
+      // for evey refresh, user needs to be saved into redux 
+      // (username (himself) becomes clickable)
+      dispatch(setUserData(userData))
       // update online users 
       socketConnection(userData, dispatch)
     } else {
