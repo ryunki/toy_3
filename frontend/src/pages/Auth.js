@@ -33,7 +33,9 @@ const Auth = () => {
         email : formState.inputs.email.value,
         password : formState.inputs.password.value
       }
+      console.log("1. before await login")
       const response = await login(user, navigate)
+      console.log("2. after await login")
       userLogin(response, navigate)
 
     } else{

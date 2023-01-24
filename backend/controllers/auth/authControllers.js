@@ -14,7 +14,7 @@ const registerUser = async(req,res,next) => {
     if(userExists){
       return res.status(403).send('User exists')
     }else{
-      const hashedPassword = bcrypt.hashSync(password, 12)
+      const hashedPassword = await bcrypt.hash(password, 12)
       createdUser = await User.create({
         username, 
         email: email.toLowerCase(), 
@@ -47,8 +47,7 @@ const loginUser = async(req,res,next) => {
     const existingUser = await User.findOne({email})
     if (!existingUser) {
       return res.status(403).send("Invalid credentials, could not log you in")
-    } else if (bcrypt.compareSync(password, existingUser.password)){
-      
+    } else if (await bcrypt.compare(password, existingUser.password)){
       const token = jwt.sign(
         {_id: existingUser._id, email: existingUser.email, username:existingUser.username},
         process.env.JWT_KEY,
