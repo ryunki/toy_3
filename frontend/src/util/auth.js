@@ -6,10 +6,10 @@ export const logout = () => {
 };
 
 
-export const userLogin = async (response, navigate) =>{
+export const userLogin = (response, navigate) =>{
 
   const {_id, username, email, token} = response
-  const decoded = await parseJwt(token)
+  const decoded = parseJwt(token)
 
   // decoded.exp is sent from backend which returns in seconds format
   // *1000 because "new Date()" takes parameter in miliseconds
