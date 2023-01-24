@@ -1,8 +1,11 @@
 import { useState, useEffect} from 'react';
+import { useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom"
-import { useForm } from '../hooks/form-hook';
-import {userLogin} from '../util/auth';
+import { setUserData } from "../store/slices/userSlice"
 
+import { useForm } from '../hooks/form-hook';
+
+import {userLogin} from '../util/auth';
 import {login, register} from '../util/api'
 
 import Input from '../components/FormElements/Input';
@@ -23,6 +26,7 @@ const initialFormValidity = false
 
 const Auth = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [isLoginMode, setIsLoginMode] = useState(false);
   const [formState, inputHandler, setFormSwitched] = useForm(initialInputs, initialFormValidity)
   
@@ -36,8 +40,9 @@ const Auth = () => {
       console.log("1. before await login")
       const response = await login(user, navigate)
       console.log("2. after await login")
-      userLogin(response, navigate)
-
+      userLogin(response, navigate, dispatch)
+      //saving user data in redux
+      dispatch(setUserData(response))
     } else{
       const user = {
         email : formState.inputs.email.value,
@@ -45,7 +50,9 @@ const Auth = () => {
         username : formState.inputs.username.value,
       }
       const response = await register(user)
-      userLogin(response, navigate)
+      userLogin(response, navigate, dispatch)
+      //saving user data in redux
+      dispatch(setUserData(response))
     }
   };
 

@@ -1,4 +1,4 @@
-import axios from 'axios'
+
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getAllUsers } from '../../../util/api'

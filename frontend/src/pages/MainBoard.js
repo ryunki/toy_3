@@ -6,7 +6,6 @@ import SideBar from "./MainBoard/SideBar/SideBar"
 import { sendDirectMessage, socketConnection, getDirectChatHistory } from "../realtimeCommunication/socketConnection"
 import { logout } from "../util/auth"
 
-import { setUserData } from "../store/slices/userSlice"
 import { useDispatch } from 'react-redux'
 
 import './MainBoard.css'
@@ -17,14 +16,10 @@ const MainBoard = () => {
   const [message, setMessage] = useState("")
   const [beginChat, setBeginChat] = useState({})
 
-  const userData = JSON.parse(localStorage.getItem("user"))
-
+  
   useEffect(()=>{
+    const userData = JSON.parse(localStorage.getItem("user"))
     if(userData){
-      console.log("userData exists in MainBoard.js", userData)
-      //saving user data in redux
-      dispatch(setUserData(userData))
-      
       // update online users 
       socketConnection(userData, dispatch)
     } else {
@@ -54,7 +49,6 @@ const MainBoard = () => {
   return (
     <div className="mainboard-container">
       <SideBar 
-        userData = {userData}
         beginChatHandler = {beginChatHandler}
       />
       <div className="header-chat-container">

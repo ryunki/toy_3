@@ -1,8 +1,9 @@
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-const OnlineUsers = ({ userData, beginChatHandler,onlineUsers}) => {
+const OnlineUsers = ({ beginChatHandler,onlineUsers }) => {
 
-  
+  const userData = useSelector(state => state.user)
 
   return (
     <div className="sidebar-container">

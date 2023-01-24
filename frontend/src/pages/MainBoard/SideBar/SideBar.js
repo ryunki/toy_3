@@ -6,7 +6,7 @@ import OnlineUsers from './OnlineUsers'
 
 import './SideBar.css'
 
-const SideBar = ({ userData, beginChatHandler}) => {
+const SideBar = ({beginChatHandler}) => {
 
   const onlineUsers = useSelector((state)=> state.online.users)
 
@@ -14,7 +14,6 @@ const SideBar = ({ userData, beginChatHandler}) => {
     <>
       <AllUsers/>
       <OnlineUsers
-        userData={userData} 
         beginChatHandler={beginChatHandler}
         onlineUsers={onlineUsers}
       />
