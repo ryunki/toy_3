@@ -4,7 +4,8 @@ import { logout } from './auth'
 // creating custom instance of axios
 const apiClient = axios.create({
   baseURL: '/api',
-  timeout:1000, //how long to wait for response
+  //how long to wait for response
+  // timeout:1000, 
 })
 
 // for running codes in secured routes. 

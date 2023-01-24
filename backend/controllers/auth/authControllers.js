@@ -54,7 +54,6 @@ const loginUser = async(req,res,next) => {
         process.env.JWT_KEY,
         {expiresIn: "1h"}
         )
-
       return res.status(200).json({
         _id: existingUser._id,
         username: existingUser.username,

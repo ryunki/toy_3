@@ -6,10 +6,11 @@ export const logout = () => {
 };
 
 
-export const userLogin = (response, navigate) =>{
+export const userLogin = async(response, navigate) =>{
 
   const {_id, username, email, token} = response
-  const decoded = parseJwt(token)
+  const decoded = JSON.parse(window.atob(token.split('.')[1]))
+  // const decoded = parseJwt(token)
 
   // decoded.exp is sent from backend which returns in seconds format
   // *1000 because "new Date()" takes parameter in miliseconds
@@ -43,10 +44,11 @@ export const userLogin = (response, navigate) =>{
   
 }
 
-function parseJwt(token){
-  try{
-    return JSON.parse(window.atob(token.split('.')[1]))
-  }catch(err){
-    return null
-  }
-}
+// function parseJwt(token){
+//   try{
+//     console.log("TOKEN IN parseJwt: ", token)
+//     return JSON.parse(window.atob(token.split('.')[1]))
+//   }catch(err){
+//     return null
+//   }
+// }
