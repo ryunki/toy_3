@@ -20,8 +20,8 @@ const MessageContents = () => {
     const date = item.split('T')[0]
     let x = {}
     if(idx > 0 ){ // starting from second message. compare date from the previous message
-      const compareDate = chat.messages[idx-1].date.split('T')[0]
-      if (date !== compareDate){
+      const previousDate = chat.messages[idx-1].date.split('T')[0]
+      if (date !== previousDate){
         return true
       }
     }else{  // very first message
@@ -35,12 +35,12 @@ const MessageContents = () => {
     return time
   }
 
-  // remove repeated usernames other than the first message
+  // remove repeated usernames except the first message
   const compareUsername = (item, idx) => {
     if(idx > 0){
-      const username = chat.messages[idx-1].author.username
+      const previousUsername = chat.messages[idx-1].author.username
       // compare current username to the previous one
-      if(item !== username)
+      if(item !== previousUsername)
       return item
     }else{
       return item

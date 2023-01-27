@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   messages:[],
-  participants:[]
+  participants:[],
+  conversationId:""
 }
 
 export const chatSlice = createSlice({
@@ -12,6 +13,7 @@ export const chatSlice = createSlice({
     setChat: (state, action)=>{
       state.messages=action.payload.messages
       state.participants=action.payload.participants
+      state.conversationId=action.payload.conversationId
     }
   }
 })

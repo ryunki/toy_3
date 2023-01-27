@@ -20,9 +20,7 @@ const MessageBoard = (props) => {
   return (
     <div className="messageboard-container">
       {!disableInput ? (
-        <MessageContents
-          beginChat={props.beginChat}
-          />
+        <MessageContents />
         ) : (
           <WelcomeMessage/>
         )

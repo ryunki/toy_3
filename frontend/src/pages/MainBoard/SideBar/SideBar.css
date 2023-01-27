@@ -18,3 +18,11 @@
 .pointer{
   cursor:pointer;
 }
+
+.notification{
+  background-color: red;
+  width:8px;
+  height:8px;
+  border-radius: 50%;
+  align-self:center;
+}

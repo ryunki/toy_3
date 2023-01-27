@@ -4,6 +4,9 @@ import io from "socket.io-client"
 import {setOnlineUsers} from "../store/slices/onlineSlice";
 import {setChat} from "../store/slices/chatSlice";
 
+import { setNotification } from "../store/slices/notificationSlice";
+import { updateDirectChatHistoryIfActive } from "../util/chat";
+
 let socket = null
 
 export const socketConnection = (userData, dispatch) => {
@@ -29,7 +32,21 @@ export const socketConnection = (userData, dispatch) => {
 
   // the targeted user receives message from this
   socket.on('direct-chat-history', (data) => {
+    console.log("received a new chat------------")
+
+    // const chat = useSelector(state => state.chat)
+    // const userId = useSelector(state => state.user._id)
+    // updateDirectChatHistoryIfActive(data, dispatch)
     dispatch(setChat(data))
+
+
+    //******************************************* */
+    // send logged in user's ID and the participants in a newly received chat to redux
+    // dispatch(setNotification({
+    //   participants: data.participants, 
+    //   conversationId: data.conversationId,
+    //   userId: userData._id
+    // }))
   })
 }
 
@@ -39,7 +56,8 @@ export const sendDirectMessage = ({message, receiverInfo}) => {
 }
 
 export const getDirectChatHistory = (receiverId) =>{
-  // send target user ID to server
+  // send target user ID to server, when click on a target username
+  console.log("getDirectChatHistory-------------")
   socket.emit('direct-chat-history', receiverId)
 }
 

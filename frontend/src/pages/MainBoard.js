@@ -11,13 +11,12 @@ import { useDispatch } from 'react-redux'
 import './MainBoard.css'
 import { setUserData } from "../store/slices/userSlice"
 
-
 const MainBoard = () => {
   const dispatch = useDispatch()
   const [message, setMessage] = useState("")
   const [beginChat, setBeginChat] = useState({})
 
-  
+  // const userData = JSON.parse(localStorage.getItem("user"))
   useEffect(()=>{
     const userData = JSON.parse(localStorage.getItem("user"))
     if(userData){
@@ -33,13 +32,21 @@ const MainBoard = () => {
   
   //when click on another user name
   const beginChatHandler = (socketId, receiverId, username) => {
-    setBeginChat({username, socketId, receiverId})
+    console.log("clicked a target user")
+    //used in header to display target name, and to enable input field
+    setBeginChat({username, receiverId})
     //get chat history when a target user is clicked
     getDirectChatHistory(receiverId)
+
+    //*************************
+    // change notification to read
+    // dispatch(setCurrentChat(receiverId))
+
   }
 
   const inputHandler = (e) => {
     const msg = e.target.value
+    // used to send typed message as a parameter for "sendDirectMessage" function
     setMessage(msg)
   }
 

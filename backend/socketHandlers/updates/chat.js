@@ -21,7 +21,8 @@ const updateChat = async(conversationId, receiverSocketId = null) => {
         console.log("when clicked on a target user to begin a chat...")
         return io.to(receiverSocketId).emit('direct-chat-history',{
           participants: conversation.participants,
-          messages: conversation.messages
+          messages: conversation.messages,
+          conversationId
         })
       }
     
@@ -33,7 +34,8 @@ const updateChat = async(conversationId, receiverSocketId = null) => {
       activeConnections.forEach(socketId => {
           io.to(socketId).emit('direct-chat-history', {
           participants: conversation.participants,
-          messages: conversation.messages
+          messages: conversation.messages,
+          conversationId
         })
       })
     })
