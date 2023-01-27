@@ -30,6 +30,7 @@ export const login = async(user, navigate) => {
     return data
   }catch(err){
     navigate('/')
+    checkResponseCode(err)
     return err
   }
 }
@@ -38,6 +39,7 @@ export const register = async(user) => {
     const {data} = await apiClient.post('/register', user)
     return data
   }catch(err){
+    checkResponseCode(err)
     return err
   }
 }
