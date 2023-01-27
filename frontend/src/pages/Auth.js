@@ -42,11 +42,15 @@ const Auth = () => {
       }
 
       setLoading(true)
-      const response = await login(user, navigate)
-      setLoading(false)
-      userLogin(response, navigate)
-      //saving user data in redux
-      dispatch(setUserData(response))
+      // const response = await login(user, navigate)
+      login(user, navigate)
+        .then(response=>{
+            setLoading(false)
+            userLogin(response, navigate)
+            //saving user data in redux
+            dispatch(setUserData(response))
+        })
+
     } else{
       const user = {
         email : formState.inputs.email.value,
@@ -54,11 +58,13 @@ const Auth = () => {
         username : formState.inputs.username.value,
       }
       setLoading(true)
-      const response = await register(user)
-      setLoading(false)
-      userLogin(response, navigate)
-      //saving user data in redux
-      dispatch(setUserData(response))
+      register(user)
+        .then(response=>{
+            setLoading(false)
+            userLogin(response, navigate)
+            //saving user data in redux
+            dispatch(setUserData(response))
+        })
     }
   };
 
