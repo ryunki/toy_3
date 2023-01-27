@@ -13,9 +13,9 @@ export const socketConnection = (userData, dispatch) => {
   
   const token = userData.token
   // this is for browser
-  socket = io("http://localhost:5000",{
+  // socket = io("http://localhost:5000",{
   //this works for mobile phone and brower
-  // socket = io("http://192.168.0.5:5000",{
+  socket = io("http://192.168.0.5:5000",{
     auth:{
       token
     }
