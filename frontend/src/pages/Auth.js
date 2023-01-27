@@ -28,8 +28,11 @@ const Auth = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isLoginMode, setIsLoginMode] = useState(false);
+  const [loading, setLoading] = useState(false)
+  
   const [formState, inputHandler, setFormSwitched] = useForm(initialInputs, initialFormValidity)
   
+
   const authSubmitHandler = async(e) => {
     e.preventDefault();
     if(isLoginMode){
@@ -38,7 +41,9 @@ const Auth = () => {
         password : formState.inputs.password.value
       }
 
+      setLoading(true)
       const response = await login(user, navigate)
+      setLoading(false)
       userLogin(response, navigate)
       //saving user data in redux
       dispatch(setUserData(response))
@@ -48,7 +53,9 @@ const Auth = () => {
         password : formState.inputs.password.value,
         username : formState.inputs.username.value,
       }
+      setLoading(true)
       const response = await register(user)
+      setLoading(false)
       userLogin(response, navigate)
       //saving user data in redux
       dispatch(setUserData(response))
@@ -87,6 +94,9 @@ const Auth = () => {
 
   return (
     <div className="auth-container">
+      {loading ?
+      <h3>loading....</h3>
+       : 
       <div className="auth-wrapper">
         <form method="get" onSubmit={authSubmitHandler}>
           {!isLoginMode && (
@@ -122,6 +132,8 @@ const Auth = () => {
           Switch to {isLoginMode ? 'SIGNUP' : 'LOGIN'}
         </button>
       </div>
+
+      }
     </div>
   );
 };
