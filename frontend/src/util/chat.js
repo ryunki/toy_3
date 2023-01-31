@@ -6,8 +6,7 @@ export const updateDirectChatHistoryIfActive = (data, dispatch, chat, userId) =>
   // const chat = useSelector(state => state.chat)
   // const userId = useSelector(state => state.user._id)
   const receiverId = chat.participants.filter(p => p !== userId)
-  console.log("in updateDirectChatHistoryIfActive")
-  console.log("data: ",data)
+  
   if(receiverId[0] && userId){
     console.log(userId,receiverId[0])
     const usersInConversation = [receiverId[0], userId]

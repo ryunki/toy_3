@@ -14,7 +14,7 @@ const registerUser = async(req,res,next) => {
     if(userExists){
       return res.status(403).send('User exists')
     }else{
-      const hashedPassword = await bcrypt.hash(password, 12)
+      const hashedPassword = await bcrypt.hash(password, 10)
       createdUser = await User.create({
         username, 
         email: email.toLowerCase(), 
@@ -41,18 +41,16 @@ const registerUser = async(req,res,next) => {
   })
 }
 
-const loginUser = async(req,res,next) => {
+const loginUser = async(req,res) => {
   try{
     const {email, password} = req.body
     const existingUser = await User.findOne({email})
-    if (!existingUser) {
-      return res.status(403).send("Invalid credentials, could not log you in")
-    } else if (await bcrypt.compare(password, existingUser.password)){
+    if (existingUser && (await bcrypt.compare(password, existingUser.password))){
       const token = jwt.sign(
-        {_id: existingUser._id, email: existingUser.email, username:existingUser.username},
-        process.env.JWT_KEY,
-        {expiresIn: "1h"}
-        )
+          {_id: existingUser._id, email: existingUser.email, username:existingUser.username},
+          process.env.JWT_KEY,
+          {expiresIn: "1h"}
+        ) 
       return res.status(200).json({
         _id: existingUser._id,
         username: existingUser.username,
@@ -62,9 +60,11 @@ const loginUser = async(req,res,next) => {
     }else{
       return res.status(401).send("Wrong credentials")
     }
+
   } catch(err){
     return res.status(500).send("Login failed. please try again")
   }
+  
 }
 
 module.exports = {

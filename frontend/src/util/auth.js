@@ -7,14 +7,9 @@ export const logout = () => {
 
 
 export const userLogin = async(response, navigate) =>{
-
-  console.log("3. userLogin")
-  
   const {_id, username, email, token} = response
-  console.log("4. before await JSON.parse token")
-  console.log(response)
+  
   const decoded = await JSON.parse(window.atob(token.split('.')[1]))
-  console.log("4. after await JSON.parse token")
   
   // decoded.exp is sent from backend which returns in seconds format
   // *1000 because "new Date()" takes parameter in miliseconds

@@ -20,12 +20,9 @@ const socketServer = async(server) => {
   socketServerStore.setSocketIo(io)
   
   io.on('connection', (socket) =>{
-    console.log('user connected')
-    
     socketServerStore.addNewConnectedUser(socket)
 // send list of online users to frontend
     emitOnlineUsers(socket)
-
 // receive message from client
     socket.on('direct-message',(message, receiverInfo)=>{
       directMessageHandler(socket, message, receiverInfo)
@@ -41,15 +38,16 @@ const socketServer = async(server) => {
     socket.on('disconnect', ()=>{
       console.log("disconnect from socket...")
       socketServerStore.removeConnectedUser(socket)
+      // emitOnlineUsers()
     })
   })
 
   //outside of io connection event
   //emit online users for every 8 seconds
 
-  setInterval(()=>{
-    emitOnlineUsers()
-  },[7000])
+  // setInterval(()=>{
+  //   emitOnlineUsers()
+  // },[7000])
 
   // emit current online users list to client
   function emitOnlineUsers(socket) {
@@ -60,7 +58,7 @@ const socketServer = async(server) => {
     }
     console.log("------------updated online users------------")
     const onlineUsers = socketServerStore.getOnlineUsers()
-    console.log(onlineUsers)
+    // console.log(onlineUsers)
     io.emit('online-users', {onlineUsers})
   }
 }

@@ -8,7 +8,7 @@ import './MessageContents.css'
 const MessageContents = () => {
   const useChat = useRef()
 
-  const state = useSelector(state => state)
+  const user = useSelector(state => state.user)
   const chat = useSelector(state => state.chat)
 
   useEffect(()=>{
@@ -59,17 +59,17 @@ const MessageContents = () => {
                     {dateSeparator(item.date, idx) && item.date.split('T')[0]}
                 </div>
                 <div style={
-                  {textAlign: state.user.username === item.author.username ? "right" : "left"}
+                  {textAlign: user.username === item.author.username ? "right" : "left"}
                   }>
                   {/* <h4>{item.author.username}</h4> */}
                   <h4>{compareUsername(item.author.username, idx)}</h4>
                   <div style={
                   {
-                    justifyContent: state.user.username === item.author.username ? "end" : "start",
+                    justifyContent: user.username === item.author.username ? "end" : "start",
                     display:"flex"
                   }
                   }>
-                    {state.user.username === item.author.username ?(
+                    {user.username === item.author.username ?(
                       <>
                         <div style={{fontSize:"8px", margin: "1em"}}>{displayTime(item.date)}</div>
                         <div>{item.content}</div>
